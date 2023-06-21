@@ -1,17 +1,17 @@
 from aws_cdk import (
-    App,
-    RemovalPolicy,
     Stack,
-    aws_s3 as s3
+    aws_lambda as _lambda
 )
 from constructs import Construct
 
 
 class BasicCdkStack(Stack):
 
-    def __init__(self, scope: App, construct_id: str, **kwargs) -> None:
+    def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
-        bucket = s3.Bucket(self, "TestBucket",
-                           versioned=True,
-                           removal_policy=RemovalPolicy.DESTROY,
-                           auto_delete_objects=True)
+        my_lambda = _lambda.Function(
+            self, 'HelloHandler',
+            runtime=_lambda.Runtime.PYTHON_3_7,
+            code=_lambda.Code.from_asset('lambda'),
+            handler='hello.handler'
+        )
