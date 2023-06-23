@@ -5,6 +5,8 @@ from aws_cdk import (
 )
 from constructs import Construct
 
+from .hitcounter import HitCounter
+
 
 class BasicCdkStack(Stack):
 
@@ -17,4 +19,9 @@ class BasicCdkStack(Stack):
             handler='hello.handler'
         )
 
-        apigw.LambdaRestApi(self, 'Endpoint', handler=my_lambda)
+        hello_with_counter = HitCounter(
+            self, 'HelloHitCounter',
+            downstream=my_lambda
+        )
+
+        apigw.LambdaRestApi(self, 'Endpoint', handler=hello_with_counter.handler)
