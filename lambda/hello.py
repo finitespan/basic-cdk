@@ -8,5 +8,5 @@ def handler(event, _):
         'headers': {
             'Content-Type': 'text/plain'
         },
-        'body': f"Hello, CDK! You have hit {event['path']}\n"
+        'body': f"Good night, CDK! You have hit {event['path']}\n"
     }
